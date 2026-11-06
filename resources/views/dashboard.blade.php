@@ -1,17 +1,18 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@php
+    $user = auth()->user();
+    if ($user && $user->isAdmin()) {
+        $totalStudents = \App\Models\User::where('role', 'student')->count();
+        $totalTeachers = \App\Models\User::where('role', 'teacher')->count();
+        $totalUsers = \App\Models\User::count();
+        $recentStudents = \App\Models\User::where('role', 'student')->latest()->take(6)->get();
+        $recentTeachers = \App\Models\User::where('role', 'teacher')->latest()->take(6)->get();
+    }
+@endphp
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+@if ($user && $user->isAdmin())
+    @include('dashboard.admin', compact('user', 'totalStudents', 'totalTeachers', 'totalUsers', 'recentStudents', 'recentTeachers'))
+@elseif ($user && $user->isTeacher())
+    @include('dashboard.teacher', compact('user'))
+@else
+    @include('dashboard.student', compact('user'))
+@endif
