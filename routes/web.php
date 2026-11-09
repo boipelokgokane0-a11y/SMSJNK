@@ -24,6 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/teacher/dashboard', [TeacherDashboardController::class, 'index'])->name('teacher.dashboard');
     Route::get('/student/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
+    Route::post('/student/request', [StudentDashboardController::class, 'storeRequest'])->name('student.request.store');
 
     Route::get('/qualifications/download/{user}', [TeacherDashboardController::class, 'downloadQualifications'])
         ->name('teacher.qualifications.download');

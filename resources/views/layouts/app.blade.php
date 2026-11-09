@@ -1,3 +1,6 @@
+@php
+    $isDarkTheme = request()->routeIs('student.dashboard', 'teacher.dashboard') || (auth()->check() && (auth()->user()->isStudent() || auth()->user()->isTeacher()) && request()->routeIs('dashboard'));
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -15,13 +18,13 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen {{ $isDarkTheme ? 'bg-[#071330]' : 'bg-gray-100' }}">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <header class="{{ $isDarkTheme ? 'bg-[#081538] border-b-2 border-orange-500/40 shadow-xl' : 'bg-white shadow' }}">
+                    <div class="max-w-7xl mx-auto {{ $isDarkTheme ? 'p-0' : 'py-6 px-4 sm:px-6 lg:px-8' }}">
                         {{ $header }}
                     </div>
                 </header>

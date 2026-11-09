@@ -6,6 +6,7 @@ namespace App\Models;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -27,6 +28,10 @@ use Spatie\Permission\Traits\HasRoles;
     'contact_number',
     'school',
     'grade',
+    'student_number',
+    'class_allocation',
+    'account_status',
+    'academic_year',
     'percel_number',
     'qualifications_document',
     'subject_to_be_taught',
@@ -53,6 +58,50 @@ class User extends Authenticatable
             'password' => 'hashed',
             'dob' => 'date',
         ];
+    }
+
+    /**
+     * Accessor for student_number with automatic fallback.
+     */
+    protected function studentNumber(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ?: ($this->isStudent() ? 'STU-2026-' . str_pad((string) ($this->id ?: 1), 4, '0', STR_PAD_LEFT) : null),
+            set: fn (?string $value) => $value,
+        );
+    }
+
+    /**
+     * Accessor for class_allocation with automatic fallback.
+     */
+    protected function classAllocation(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ?: ($this->isStudent() ? ($this->grade ? $this->grade . ' - Class A' : 'Grade 10 - Class A') : null),
+            set: fn (?string $value) => $value,
+        );
+    }
+
+    /**
+     * Accessor for account_status with automatic fallback.
+     */
+    protected function accountStatus(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ?: 'Active',
+            set: fn (?string $value) => $value,
+        );
+    }
+
+    /**
+     * Accessor for academic_year with automatic fallback.
+     */
+    protected function academicYear(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ?: '2026/2027',
+            set: fn (?string $value) => $value,
+        );
     }
 
     /**

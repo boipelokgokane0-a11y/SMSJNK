@@ -55,7 +55,8 @@ class DashboardTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Teacher Welcome Dashboard');
-        $response->assertSee('Welcome, Mrs. Anderson!');
+        $response->assertSee('Welcome Teacher');
+        $response->assertSee('Mrs. Anderson');
         $response->assertSee('Log Out');
         $response->assertSee('Mathematics');
         $response->assertSee('Oakridge High');
