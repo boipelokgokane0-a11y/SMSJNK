@@ -1,5 +1,5 @@
 @php
-    $isDarkTheme = request()->routeIs('student.dashboard', 'teacher.dashboard') || (auth()->check() && (auth()->user()->isStudent() || auth()->user()->isTeacher()) && request()->routeIs('dashboard'));
+    $isDarkTheme = request()->routeIs('student.dashboard', 'teacher.dashboard', 'admin.dashboard') || (auth()->check() && (auth()->user()->isStudent() || auth()->user()->isTeacher() || auth()->user()->isAdmin()) && request()->routeIs('dashboard', 'admin.dashboard'));
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">

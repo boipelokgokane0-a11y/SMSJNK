@@ -16,12 +16,20 @@ class AdminDashboardController extends Controller
     {
         $user = $request->user();
 
-        if (!$user->isAdmin()) {
+        if (! $user->isAdmin()) {
             return redirect()->route('dashboard');
         }
 
         $totalStudents = User::where('role', 'student')->count();
         $totalTeachers = User::where('role', 'teacher')->count();
+        // Additional stats for admin dashboard
+        $totalClasses = 0; // Placeholder – replace with actual class count when model exists
+        $attendanceToday = 0; // Placeholder – replace with actual attendance logic
+        $recentActivities = [];
+        // Example recent activities data (could be fetched from logs or events)
+        $recentActivities[] = ['type' => 'student_registered', 'status' => 'completed', 'message' => 'New student registered'];
+        $recentActivities[] = ['type' => 'teacher_added', 'status' => 'completed', 'message' => 'Teacher added'];
+        $recentActivities[] = ['type' => 'class_allocation', 'status' => 'pending', 'message' => 'Class allocation pending'];
         $totalUsers = User::count();
 
         $recentStudents = User::where('role', 'student')
@@ -40,7 +48,10 @@ class AdminDashboardController extends Controller
             'totalTeachers',
             'totalUsers',
             'recentStudents',
-            'recentTeachers'
+            'recentTeachers',
+            'totalClasses',
+            'attendanceToday',
+            'recentActivities'
         ));
     }
 }

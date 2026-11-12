@@ -18,6 +18,11 @@ class UserFactory extends Factory
     protected static ?string $password;
 
     /**
+     * Default role for factory generated users.
+     */
+    protected $defaultRole = 'student';
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -30,7 +35,18 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'role' => $this->defaultRole,
         ];
+    }
+
+    /**
+     * State for creating a teacher user.
+     */
+    public function teacher(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'teacher',
+        ]);
     }
 
     /**

@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('passport')->nullable()->after('id_number');
             $table->string('marital_status')->nullable()->after('passport');
             $table->text('address')->nullable()->after('marital_status');
+            $table->string('parent_name')->nullable()->after('address');
+            $table->string('parent_contact')->nullable()->after('parent_name');
+            $table->string('parent_email')->nullable()->after('parent_contact');
             $table->string('contact_number')->nullable()->after('address');
             $table->string('school')->nullable()->after('contact_number');
 

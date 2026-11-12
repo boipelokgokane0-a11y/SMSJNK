@@ -18,7 +18,7 @@
                         Student Welcome Dashboard
                     </h2>
                     <p class="text-sm text-sky-200 mt-1">
-                        Welcome, <strong class="text-white font-black">{{ $user->name }}</strong> &bull; Student No:
+                        Welcome Student <strong class="text-white font-black">{{ $user->name }}</strong>! &bull; Student No:
                         <span class="text-2xl sm:text-3xl font-black font-mono text-cyan-300 bg-blue-950/90 px-3 py-0.5 rounded-xl border-2 border-sky-400 shadow-inner">
                             {{ $user->student_number }}
                         </span>
@@ -105,7 +105,7 @@
                     <div class="space-y-3">
                         <div class="flex flex-wrap items-center gap-2">
                             <span class="inline-block px-3.5 py-1 bg-sky-500/20 text-cyan-300 text-xs font-black rounded-full uppercase tracking-wider border border-sky-400/50">
-                                Official Academy Portal
+                                Official Student Portal
                             </span>
 
                             <!-- Option to Change Color (Color Palette Switcher) -->
@@ -130,7 +130,7 @@
                         </div>
 
                         <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white drop-shadow">
-                            Welcome, {{ $user->name }}!
+                            Welcome Student {{ $user->name }}!
                         </h1>
                         <p class="text-blue-100 max-w-2xl text-sm sm:text-base leading-relaxed">
                             Academic Journey &bull; Enrolled in <strong class="underline decoration-cyan-400 font-black text-white">{{ $user->grade ?? 'Grade 10' }}</strong> &bull; Class: <strong class="underline decoration-cyan-400 font-black text-white">{{ $user->class_allocation }}</strong> at <strong class="underline decoration-cyan-400 font-black text-white">{{ $user->school ?? 'J & K Designs Academy' }}</strong>.
@@ -1011,7 +1011,26 @@
                     </div>
 
                     <!-- Bold Request Form -->
-                    <form method="POST" action="{{ route('student.request.store') }}" class="mt-8 space-y-6">
+                    <form method="POST" action="{{ route('student.request.store') }}" enctype="multipart/form-data" class="mt-8 space-y-6">
+                @csrf
+                <input type="hidden" name="student_number" value="{{ $user->student_number }}" />
+                <!-- Preferred Contact Method -->
+                <div>
+                    <label for="contact_method" class="block text-xs uppercase font-black text-sky-200 tracking-wider mb-2">Preferred Contact Method <span class="text-red-400">*</span></label>
+                    <select id="contact_method" name="contact_method" required class="block w-full rounded-2xl bg-[#0a1b47] border-2 border-sky-400 focus:border-cyan-300 focus:ring-0 text-sm font-bold text-white p-3.5 shadow-sm">
+                        <option value="">Select method...</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                    </select>
+                </div>
+                <!-- Attachment (optional) -->
+                <div>
+                    <label for="attachment" class="block text-xs uppercase font-black text-sky-200 tracking-wider mb-2">Attachment (optional)</label>
+                    <input type="file" id="attachment" name="attachment" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-500 file:text-white hover:file:bg-sky-600" />
+                </div>
+                
+                @csrf
+                <input type="hidden" name="student_number" value="{{ $user->student_number }}" />
                         @csrf
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">

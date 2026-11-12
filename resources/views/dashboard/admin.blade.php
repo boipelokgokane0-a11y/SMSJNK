@@ -1,8 +1,9 @@
 <x-app-layout>
+<div class="bg-[#0a1f44] min-h-screen py-8 text-white">
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-                <h2 class="font-bold text-2xl text-gray-800 leading-tight">
+                <h2 class="font-bold text-2xl text-white leading-tight">
                     Admin Welcome Dashboard
                 </h2>
                 <p class="text-sm text-gray-600">Welcome, {{ $user->name }}! You have full administrative access.</p>
@@ -22,6 +23,82 @@
             </form>
         </div>
     </x-slot>
+
+    <!-- Quick Action Buttons -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-6">
+        <a href="{{ route('student.dashboard') }}" class="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow transition">
+            Register Students
+        </a>
+        <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow transition">
+            Create Class
+        </a>
+        <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-lg shadow transition">
+            Generate Report
+        </a>
+        <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow transition">
+            Add Teacher
+        </a>
+    </div>
+
+    <!-- Stats Overview (Extended) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center justify-between">
+            <div>
+                <p class="text-xs uppercase font-semibold text-gray-500 tracking-wider">Total Students (Student Management)</p>
+                <p class="text-3xl font-extrabold text-indigo-600 mt-2">{{ $totalStudents }}</p>
+            </div>
+            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center justify-between">
+            <div>
+                <p class="text-xs uppercase font-semibold text-gray-500 tracking-wider">Total Teachers (Teacher Management)</p>
+                <p class="text-3xl font-extrabold text-emerald-600 mt-2">{{ $totalTeachers }}</p>
+            </div>
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1"/></svg>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center justify-between">
+            <div>
+                <p class="text-xs uppercase font-semibold text-gray-500 tracking-wider">Attendance Today</p>
+                <p class="text-3xl font-extrabold text-blue-600 mt-2">{{ $attendanceToday }}</p>
+            </div>
+            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center justify-between">
+            <div>
+                <p class="text-xs uppercase font-semibold text-gray-500 tracking-wider">Total Classes (Class Management)</p>
+                <p class="text-3xl font-extrabold text-purple-600 mt-2">{{ $totalClasses }}</p>
+            </div>
+            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6"/></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports & Analytics Section -->
+    <div class="mt-8">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Reports & Analytics</h2>
+        <p class="text-sm text-gray-600">(Placeholder for future analytics charts and reports.)</p>
+    </div>
+
+    <!-- Recent Activities -->
+    <div class="mt-8">
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Recent Activities</h2>
+        <ul class="space-y-2">
+            @foreach($recentActivities as $activity)
+                <li class="flex justify-between items-center bg-gray-50 p-3 rounded">
+                    <span class="font-medium">{{ $activity['message'] }}</span>
+                    <span class="text-xs {{ $activity['status'] === 'completed' ? 'text-green-600' : 'text-yellow-600' }}">{{ ucfirst($activity['status']) }}</span>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    @include('dashboard.partials.admin-info')
 
     <div class="py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -242,3 +319,4 @@
         </div>
     </div>
 </x-app-layout>
+</div>

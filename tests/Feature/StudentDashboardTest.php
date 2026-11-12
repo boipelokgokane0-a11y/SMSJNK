@@ -52,6 +52,12 @@ class StudentDashboardTest extends TestCase
 
         $response->assertStatus(200);
 
+        // Welcome Student Heading & Official Student Portal
+        $response->assertSee('Student Welcome Dashboard');
+        $response->assertSee('Welcome Student Lindiwe Dlamini!');
+        $response->assertSee('Official Student Portal');
+        $response->assertDontSee('Welcome Teacher');
+
         // 1. Student Number (Big and Bold)
         $response->assertSee('STU-2026-0042');
         $response->assertSee('Student Number');
@@ -249,5 +255,13 @@ class StudentDashboardTest extends TestCase
         $loginResponse->assertSee('EMAIL ADDRESS');
         $loginResponse->assertSee('Log in');
         $loginResponse->assertDontSee('bg-white');
+
+        // Verify Student Portal login route
+        $studentLoginResponse = $this->get('/login?portal=student');
+        $studentLoginResponse->assertStatus(200);
+        $studentLoginResponse->assertSee('OFFICIAL STUDENT PORTAL');
+        $studentLoginResponse->assertSee('WELCOME BACK');
+        $studentLoginResponse->assertSee('STUDENT!');
+        $studentLoginResponse->assertSee('student@jkdesignsacademy.co.za');
     }
 }

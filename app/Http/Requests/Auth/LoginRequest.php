@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -28,7 +30,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -36,19 +38,38 @@ class LoginRequest extends FormRequest
     /**
      * Attempt to authenticate the request's credentials.
      *
+     * Supports authentication via:
+     * - Email address (case-insensitive)
+     * - Student number (e.g. STU-2026-0001)
+     * - Teacher Persal number (e.g. PER-8899)
+     * - National ID number
+     *
      * @throws ValidationException
      */
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $loginInput = trim((string) $this->input('email'));
+        $password = (string) $this->input('password');
+        $remember = $this->boolean('remember');
+
+        // Look up user by email (case-insensitive), student_number, percel_number, or id_number
+        $user = User::whereRaw('LOWER(email) = ?', [strtolower($loginInput)])
+            ->orWhere('student_number', $loginInput)
+            ->orWhere('percel_number', $loginInput)
+            ->orWhere('id_number', $loginInput)
+            ->first();
+
+        if (! $user || ! Hash::check($password, $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
+
+        Auth::login($user, $remember);
 
         RateLimiter::clear($this->throttleKey());
     }

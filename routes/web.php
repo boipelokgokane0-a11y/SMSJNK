@@ -10,7 +10,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Admin-only routes (require email verification)
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+});
+
+// Student and teacher routes (auth only, no email verification required)
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         $user = auth()->user();
         if ($user->isAdmin()) {
@@ -18,10 +24,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         } elseif ($user->isTeacher()) {
             return redirect()->route('teacher.dashboard');
         }
+
         return redirect()->route('student.dashboard');
     })->name('dashboard');
 
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/teacher/dashboard', [TeacherDashboardController::class, 'index'])->name('teacher.dashboard');
     Route::get('/student/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
     Route::post('/student/request', [StudentDashboardController::class, 'storeRequest'])->name('student.request.store');

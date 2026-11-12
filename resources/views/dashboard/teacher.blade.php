@@ -41,6 +41,7 @@
             </div>
         </div>
     </x-slot>
+    @include('dashboard.partials.teacher-info')
 
     <!-- Dark Blue Teacher Dashboard Canvas with Blue, Red & Orange Aesthetic -->
     <div class="py-8 bg-[#071330] min-h-screen text-slate-100"

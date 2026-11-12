@@ -25,6 +25,9 @@ use Spatie\Permission\Traits\HasRoles;
     'passport',
     'marital_status',
     'address',
+    'parent_name',
+    'parent_contact',
+    'parent_email',
     'contact_number',
     'school',
     'grade',
@@ -44,7 +47,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, HasRoles, Notifiable;
 
     /**
      * Get the attributes that should be cast.
@@ -66,7 +69,7 @@ class User extends Authenticatable
     protected function studentNumber(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value) => $value ?: ($this->isStudent() ? 'STU-2026-' . str_pad((string) ($this->id ?: 1), 4, '0', STR_PAD_LEFT) : null),
+            get: fn (?string $value) => $value ?: ($this->isStudent() ? 'STU-2026-'.str_pad((string) ($this->id ?: 1), 4, '0', STR_PAD_LEFT) : null),
             set: fn (?string $value) => $value,
         );
     }
@@ -77,7 +80,7 @@ class User extends Authenticatable
     protected function classAllocation(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value) => $value ?: ($this->isStudent() ? ($this->grade ? $this->grade . ' - Class A' : 'Grade 10 - Class A') : null),
+            get: fn (?string $value) => $value ?: ($this->isStudent() ? ($this->grade ? $this->grade.' - Class A' : 'Grade 10 - Class A') : null),
             set: fn (?string $value) => $value,
         );
     }
