@@ -504,54 +504,52 @@
                             <p class="text-sm text-sky-200 mt-1 font-bold">Registered student dossier, personal identification and emergency records</p>
                         </div>
 
-                        <a href="{{ route('profile.edit') }}"
-                           class="inline-flex items-center px-6 py-3 bg-sky-400 hover:bg-sky-300 text-slate-950 text-sm font-black rounded-xl shadow-lg transition transform hover:-translate-y-0.5">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                            Edit Account Information
-                        </a>
+                        <!-- Student ID Portrait -->
+                        <div class="flex flex-col items-center gap-3 shrink-0">
+                            <div class="relative">
+                                <img src="{{ asset('images/student-profile.jpg') }}"
+                                     alt="Student Profile Photo"
+                                     class="w-32 h-40 sm:w-44 sm:h-56 object-cover object-top rounded-2xl border-4 border-cyan-400 shadow-2xl shadow-cyan-400/40"
+                                     onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=0f286b&color=22d3ee&size=200&bold=true&format=png';">
+                                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-cyan-400 text-slate-950 text-xs font-black rounded-full shadow-lg uppercase tracking-wider whitespace-nowrap">
+                                    ID Photo
+                                </div>
+                            </div>
+                            <div class="text-center mt-5">
+                                <span class="font-mono text-xs text-cyan-300 font-black px-3 py-1 bg-blue-950 rounded-lg border border-sky-400/50">{{ $user->student_number }}</span>
+                            </div>
+                            <a href="{{ route('profile.edit') }}"
+                               class="inline-flex items-center px-5 py-2.5 bg-sky-400 hover:bg-sky-300 text-slate-950 text-sm font-black rounded-xl shadow-lg transition transform hover:-translate-y-0.5 mt-1">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                Edit Account
+                            </a>
+                        </div>
                     </div>
 
                     <div class="mt-8 space-y-8">
-                        <!-- 1. Academic Identification -->
+                        <!-- 1. Unified Student Identification & Personal Details (No Duplication) -->
                         <div>
                             <h4 class="text-xs uppercase font-black tracking-widest text-sky-300 border-b border-sky-400/30 pb-2 mb-4">
-                                1. Academic Credentials &amp; Identifiers
-                            </h4>
-                            <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                                <div class="bg-[#0a1b47] p-5 rounded-2xl border-2 border-sky-400 shadow">
-                                    <dt class="text-xs uppercase font-black text-sky-300">Student Number</dt>
-                                    <dd class="text-2xl sm:text-3xl font-black font-mono text-cyan-300 mt-1.5">{{ $user->student_number }}</dd>
-                                </div>
-                                <div class="bg-[#0a1b47] p-5 rounded-2xl border-2 border-sky-400/60 shadow">
-                                    <dt class="text-xs uppercase font-black text-sky-300">Class Allocation</dt>
-                                    <dd class="text-xl sm:text-2xl font-black text-white mt-1.5">{{ $user->class_allocation }}</dd>
-                                </div>
-                                <div class="bg-[#0a1b47] p-5 rounded-2xl border-2 border-emerald-400 shadow">
-                                    <dt class="text-xs uppercase font-black text-emerald-300">Account Status</dt>
-                                    <dd class="mt-1.5">
-                                        <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-black bg-emerald-500 text-slate-950 shadow">
-                                            &bull; {{ strtoupper($user->account_status) }}
-                                        </span>
-                                    </dd>
-                                </div>
-                                <div class="bg-[#0a1b47] p-5 rounded-2xl border-2 border-amber-400 shadow">
-                                    <dt class="text-xs uppercase font-black text-amber-300">Academic Year</dt>
-                                    <dd class="text-2xl sm:text-3xl font-black text-amber-300 mt-1.5">{{ $user->academic_year }}</dd>
-                                </div>
-                            </dl>
-                        </div>
-
-                        <!-- 2. Personal Details (Bold) -->
-                        <div>
-                            <h4 class="text-xs uppercase font-black tracking-widest text-sky-300 border-b border-sky-400/30 pb-2 mb-4">
-                                2. Personal Identification Details
+                                1. Student Personal &amp; Academic Credentials
                             </h4>
                             <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                                 <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
                                     <dt class="text-xs uppercase font-black text-sky-300">Names &amp; Surname</dt>
                                     <dd class="font-black text-white mt-1 text-base">{{ $user->name }}</dd>
+                                </div>
+                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400 shadow">
+                                    <dt class="text-xs uppercase font-black text-sky-300">Student Number</dt>
+                                    <dd class="text-xl sm:text-2xl font-black font-mono text-cyan-300 mt-1">{{ $user->student_number }}</dd>
+                                </div>
+                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/60 shadow">
+                                    <dt class="text-xs uppercase font-black text-sky-300">Class Allocation</dt>
+                                    <dd class="text-lg font-black text-white mt-1">{{ $user->class_allocation }}</dd>
+                                </div>
+                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-amber-400 shadow">
+                                    <dt class="text-xs uppercase font-black text-amber-300">Grade Level</dt>
+                                    <dd class="font-black text-amber-300 mt-1 text-lg">{{ $user->grade ?? 'Grade 10' }}</dd>
                                 </div>
                                 <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
                                     <dt class="text-xs uppercase font-black text-sky-300">Date of Birth (DOB)</dt>
@@ -562,70 +560,74 @@
                                     <dd class="font-black text-white mt-1">{{ $user->gender ?? 'Not specified' }}</dd>
                                 </div>
                                 <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
-                                    <dt class="text-xs uppercase font-black text-sky-300">Ethnicity</dt>
-                                    <dd class="font-black text-white mt-1">{{ $user->ethnicity ?? 'Not specified' }}</dd>
+                                    <dt class="text-xs uppercase font-black text-sky-300">ID / Passport Number</dt>
+                                    <dd class="font-mono font-black text-white mt-1">{{ $user->id_number ?: ($user->passport ?: 'Not specified') }}</dd>
+                                </div>
+                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-emerald-400 shadow">
+                                    <dt class="text-xs uppercase font-black text-emerald-300">Account Status</dt>
+                                    <dd class="mt-1">
+                                        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-black bg-emerald-500 text-slate-950 shadow">
+                                            &bull; {{ strtoupper($user->account_status) }}
+                                        </span>
+                                    </dd>
                                 </div>
                                 <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
-                                    <dt class="text-xs uppercase font-black text-sky-300">ID Number</dt>
-                                    <dd class="font-mono font-black text-white mt-1">{{ $user->id_number ?: 'Not specified' }}</dd>
-                                </div>
-                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
-                                    <dt class="text-xs uppercase font-black text-sky-300">Passport Number</dt>
-                                    <dd class="font-mono font-black text-white mt-1">{{ $user->passport ?: 'Not specified' }}</dd>
-                                </div>
-                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
-                                    <dt class="text-xs uppercase font-black text-sky-300">Marital Status</dt>
-                                    <dd class="font-black text-white mt-1">{{ $user->marital_status ?? 'Single' }}</dd>
-                                </div>
-                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
-                                    <dt class="text-xs uppercase font-black text-sky-300">Grade Level</dt>
-                                    <dd class="font-black text-amber-300 mt-1 text-base">{{ $user->grade ?? 'Grade 10' }}</dd>
-                                </div>
-                            </dl>
-                        </div>
-
-                        <!-- 3. Contact Details (Bold) -->
-                        <div>
-                            <h4 class="text-xs uppercase font-black tracking-widest text-sky-300 border-b border-sky-400/30 pb-2 mb-4">
-                                3. Contact &amp; Residential Information
-                            </h4>
-                            <dl class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
-                                    <dt class="text-xs uppercase font-black text-sky-300">Email Address</dt>
+                                    <dt class="text-xs uppercase font-black text-sky-300">Student Email Address</dt>
                                     <dd class="font-black text-white mt-1 break-all">{{ $user->email }}</dd>
                                 </div>
                                 <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
                                     <dt class="text-xs uppercase font-black text-sky-300">Student Contact #</dt>
                                     <dd class="font-mono font-black text-white mt-1">{{ $user->contact_number ?? 'Not specified' }}</dd>
                                 </div>
-                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
-                                    <dt class="text-xs uppercase font-black text-sky-300">Enrolled School</dt>
-                                    <dd class="font-black text-white mt-1">{{ $user->school ?? 'J & K Designs Academy' }}</dd>
-                                </div>
-                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40 sm:col-span-3">
-                                    <dt class="text-xs uppercase font-black text-sky-300">Physical Residential Address</dt>
+                                <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40 sm:col-span-2">
+                                    <dt class="text-xs uppercase font-black text-sky-300">Residential Address</dt>
                                     <dd class="font-bold text-white mt-1">{{ $user->address ?? 'Not specified' }}</dd>
                                 </div>
                             </dl>
                         </div>
 
-                        <!-- 4. Next of Kin (Bold) -->
+                        <!-- 2. Parents / Guardian Information -->
+                        <div>
+                            <h4 class="text-xs uppercase font-black tracking-widest text-cyan-300 border-b border-cyan-400/40 pb-2 mb-4 flex items-center gap-2">
+                                <span>👨‍👩‍👧</span>
+                                <span>2. Parent / Guardian Details</span>
+                            </h4>
+                            <dl class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                                <div class="bg-[#0a1b47] p-5 rounded-2xl border-2 border-cyan-400/60 shadow-lg">
+                                    <dt class="text-xs uppercase font-black text-cyan-300">Parents Name</dt>
+                                    <dd class="text-xl font-black text-white mt-1.5">{{ $user->parent_name ?: 'Mixo Mdaka' }}</dd>
+                                    <span class="text-[11px] font-bold text-sky-200 mt-1 block">Primary Legal Guardian</span>
+                                </div>
+                                <div class="bg-[#0a1b47] p-5 rounded-2xl border-2 border-cyan-400/60 shadow-lg">
+                                    <dt class="text-xs uppercase font-black text-cyan-300">Parents Contact Details</dt>
+                                    <dd class="text-xl font-mono font-black text-cyan-300 mt-1.5">{{ $user->parent_contact ?: '0713998559' }}</dd>
+                                    <span class="text-[11px] font-bold text-sky-200 mt-1 block">Primary Phone / WhatsApp</span>
+                                </div>
+                                <div class="bg-[#0a1b47] p-5 rounded-2xl border-2 border-cyan-400/60 shadow-lg">
+                                    <dt class="text-xs uppercase font-black text-cyan-300">Parents Email</dt>
+                                    <dd class="text-base font-black text-white mt-1.5 break-all">{{ $user->parent_email ?: 'mixomdaka@gmail.com' }}</dd>
+                                    <span class="text-[11px] font-bold text-sky-200 mt-1 block">Academic Notices &amp; Reports</span>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <!-- 3. Next of Kin Emergency Contacts -->
                         <div>
                             <h4 class="text-xs uppercase font-black tracking-widest text-sky-300 border-b border-sky-400/30 pb-2 mb-4">
-                                4. Next of Kin Emergency Contacts
+                                3. Next of Kin Emergency Contacts
                             </h4>
                             <dl class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                                 <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
                                     <dt class="text-xs uppercase font-black text-sky-300">Next of Kin Full Name</dt>
-                                    <dd class="font-black text-white mt-1 text-base">{{ $user->next_of_kin_name ?? 'Not specified' }}</dd>
+                                    <dd class="font-black text-white mt-1 text-base">{{ $user->next_of_kin_name ?? ($user->parent_name ?: 'Mixo Mdaka') }}</dd>
                                 </div>
                                 <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
                                     <dt class="text-xs uppercase font-black text-sky-300">Relationship to Student</dt>
-                                    <dd class="font-black text-white mt-1 text-base">{{ $user->next_of_kin_relationship ?? 'Not specified' }}</dd>
+                                    <dd class="font-black text-white mt-1 text-base">{{ $user->next_of_kin_relationship ?? 'Parent / Guardian' }}</dd>
                                 </div>
                                 <div class="bg-[#0a1b47] p-4 rounded-2xl border-2 border-sky-400/40">
                                     <dt class="text-xs uppercase font-black text-sky-300">Next of Kin Contact #</dt>
-                                    <dd class="font-mono font-black text-white mt-1 text-base">{{ $user->next_of_kin_contact ?? 'Not specified' }}</dd>
+                                    <dd class="font-mono font-black text-white mt-1 text-base">{{ $user->next_of_kin_contact ?? ($user->parent_contact ?: '0713998559') }}</dd>
                                 </div>
                             </dl>
                         </div>

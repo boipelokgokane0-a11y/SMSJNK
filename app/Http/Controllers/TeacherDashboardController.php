@@ -270,7 +270,7 @@ class TeacherDashboardController extends Controller
             'total_assessed' => 142,
             'top_achievers' => [
                 ['name' => 'Lindiwe Dlamini', 'grade' => 'Grade 12-A', 'score' => 94.5, 'distinctions' => 3],
-                ['name' => 'Thabo Sithole', 'grade' => 'Grade 12-A', 'score' => 91.0, 'distinctions' => 2],
+                ['name' => 'Thabo Dlamini', 'grade' => 'Grade 10-A', 'score' => 91.0, 'distinctions' => 2],
                 ['name' => 'Sipho Khumalo', 'grade' => 'Grade 11-B', 'score' => 89.5, 'distinctions' => 2],
                 ['name' => 'Zola Nene', 'grade' => 'Grade 10-A', 'score' => 88.0, 'distinctions' => 1],
                 ['name' => 'Kagiso Molefe', 'grade' => 'Grade 12-C', 'score' => 86.5, 'distinctions' => 1],

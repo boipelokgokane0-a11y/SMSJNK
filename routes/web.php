@@ -13,6 +13,10 @@ Route::get('/', function () {
 // Admin-only routes (require email verification)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::post('/admin/students', [AdminDashboardController::class, 'storeStudent'])->name('admin.students.store');
+    Route::post('/admin/teachers', [AdminDashboardController::class, 'storeTeacher'])->name('admin.teachers.store');
+    Route::post('/admin/classes', [AdminDashboardController::class, 'storeClass'])->name('admin.classes.store');
+    Route::get('/admin/reports/export', [AdminDashboardController::class, 'exportReport'])->name('admin.reports.export');
 });
 
 // Student and teacher routes (auth only, no email verification required)

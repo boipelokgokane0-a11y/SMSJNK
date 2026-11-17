@@ -108,6 +108,39 @@ class User extends Authenticatable
     }
 
     /**
+     * Accessor for parent_name with automatic fallback for students.
+     */
+    protected function parentName(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ?: ($this->isStudent() ? 'Mixo Mdaka' : null),
+            set: fn (?string $value) => $value,
+        );
+    }
+
+    /**
+     * Accessor for parent_contact with automatic fallback for students.
+     */
+    protected function parentContact(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ?: ($this->isStudent() ? '0713998559' : null),
+            set: fn (?string $value) => $value,
+        );
+    }
+
+    /**
+     * Accessor for parent_email with automatic fallback for students.
+     */
+    protected function parentEmail(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ?: ($this->isStudent() ? 'mixomdaka@gmail.com' : null),
+            set: fn (?string $value) => $value,
+        );
+    }
+
+    /**
      * Determine if the user is an admin.
      */
     public function isAdmin(): bool
